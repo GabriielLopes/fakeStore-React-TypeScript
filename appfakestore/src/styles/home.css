@@ -1,4 +1,4 @@
-.vitrine-produtos {
+.section {
   display: flex;
   width: 100%;
   max-width: 100%;
@@ -6,23 +6,47 @@
   background-color: rgba(128, 128, 128, 0.1);
 }
 
+.section-white {
+  background-color: #fff;
+  color: black;
+}
 
 .vitrine-produtos .img-vitrine {
-  margin: 20vh 0;
-  max-height: 500px;
-  width: 30%;
+  margin: 80px 0;
+  height: 80vh;
+  width: 80vh;
   opacity: 0;
   transition: all 500ms ease-out;
 }
 
 .vitrine-produtos .img-vitrine.center {
-  margin: 20vh 60vh;
+  margin: 80px 60vh;
   transition: all 500ms ease-out;
   opacity: 1;
 }
 
 .vitrine-produtos .img-vitrine.direita {
-  margin: 20vh 100vh;
+  margin: 80px 100vh;
   transition: all 500ms ease-out;
   opacity: 0;
+}
+
+.text-content {
+  padding: 10px 25px;
+}
+
+.img-destaque2 {
+  margin: 0 auto;
+  width: 350px;
+  height: auto;
+  transition: all 500ms ease-in-out;
+}
+
+.img-destaque2:hover {
+  width: 400px;
+}
+
+.grid-img {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }
