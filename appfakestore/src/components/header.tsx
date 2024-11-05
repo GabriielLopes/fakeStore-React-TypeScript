@@ -14,7 +14,6 @@ export default function Header() {
     getData();
   }, []);
 
-  console.log(categorias);
   return (
     <aside className="menu">
         <div className="main-content menu-content">
@@ -31,8 +30,7 @@ export default function Header() {
 
             <nav>
               <ul>
-                <li><a href="#about">Sobre nós</a></li>
-                <li><a><i className='bx bx-search-alt-2' /></a></li>
+                <li><a href="#about">About us</a></li>
                 <li><a><i className='bx bx-shopping-bag' /></a></li>
                 <li><a><i className='bx bx-user' /></a></li>
               </ul>
