@@ -3,6 +3,7 @@ import axios from '../../services/axios';
 
 import '../../styles/home.css';
 import '../../styles/button.css';
+
 import { useInterval } from '../../hooks/use-interval';
 
 interface productsList {
@@ -25,6 +26,7 @@ export default function Home() {
   const [produtos, setProdutos] = useState<productsList[]>([
     {
       description: 'teste',
+      image: '"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
     },
   ]);
 
@@ -82,18 +84,23 @@ export default function Home() {
 
       <section className="section section-white">
         <div className="text-content">
-          <h3>{produtos[0].title}</h3>
+          <h3>THIS IS OUR LEADING SALES PRODUCT</h3>
           <div className="grid-img">
             <img src={produtos[0].image} alt={produtos[0].description} className="img-destaque2" />
             <p>
               {produtos[0].description}
               <br />
+              <i className="bx bxs-star" />
+              <i className="bx bxs-star" />
+              <i className="bx bxs-star" />
+              <i className="bx bxs-star-half" />
+              {produtos[0].rating?.rate}
               <br />
               <strong>Price: {produtos[0].price}</strong>
               <br />
               <br />
               <div className="controls">
-                <button className="btn comprar">BUY NOW!</button>
+                <button className="btn comprar-agora">BUY NOW!</button>
 
                 <button className="btn add-carrinho">
                   ADD CART
@@ -102,7 +109,38 @@ export default function Home() {
               </div>
             </p>
           </div>
+          <br />
         </div>
+      </section>
+
+      <section className="section section-all-products">
+        <div className="grid-produtos">
+          {produtos.map((produto) => (
+            <div className="grid-produtos-content">
+              <img src={produto.image} alt={produto.description} />
+              <br />
+              <p className="titulo-produtos-grid">{produto.title}</p>
+              <br />
+              <p>
+                <small>Rating:</small>
+                <i className="bx bxs-star" />
+                <i className="bx bxs-star" />
+                <i className="bx bxs-star" />
+                <i className="bx bxs-star" />
+                {produto.rating?.rate}
+              </p>
+              <br />
+
+              <strong>Price: {produto.price}</strong>
+              <div className="controls">
+                <button className="btn add-carrinho-small">
+                  <i className="bx bxs-cart-add" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+        <br />
       </section>
     </div>
   );
