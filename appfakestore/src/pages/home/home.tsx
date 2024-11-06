@@ -17,7 +17,12 @@ export default function Home() {
   const [imagesProducts, setImagesProducts] = useState<string[]>([]);
   const [imagemAtual, setImagemAtual] = useState(imagesProducts[0]);
   const [indexImagem, setIndexImagem] = useState(0);
-  const [produtos, setProdutos] = useState<Product[]>([]);
+  const [produtos, setProdutos] = useState<Product[]>([
+    {
+      image: '',
+      description: '',
+    }
+  ]);
 
   useEffect(() => {
     async function getData() {
