@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import '../styles/header.css';
 import axios from '../services/axios';
+import { Cart } from './cart';
 
 export default function Header() {
   const [categorias, setCategorias] = useState([]);

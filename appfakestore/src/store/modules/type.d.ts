@@ -2,21 +2,26 @@ interface Carrinho {
   id: number;
   userId: number;
   date: string;
-  products: [
+  products?: [
     {
-      productId: number;
-      quantity: number;
+      productId: number | undefined;
+      quantity: number | undefined;
     },
   ];
 }
 
-type CarrinhoState = {
-  carrinhos: Carrinho[];
+type ProductCart = {
+  productId: number;
+  quantity: number;
+}
+
+interface CarrinhoState  {
+  carrinhos: Carrinho[]
 };
 
 type CarrinhoAction = {
   type: string;
-  carrinho: Carrinho;
+  product: ProductCart,
 };
 
 type DispatchType = (args: CarrinhoAction) => CarrinhoAction;

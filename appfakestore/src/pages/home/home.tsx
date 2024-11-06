@@ -9,7 +9,7 @@ import { useInterval } from '../../hooks/use-interval';
 import { Product } from '../../interfaces/product';
 import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
-import { addCarrinho } from '../../store/modules/carrinho/actionCreators';
+import { addProduct } from '../../store/modules/carrinho/actionCreators';
 
 export default function Home() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -59,14 +59,11 @@ export default function Home() {
   };
 
   const addItemCarrinho = (product: Product): void => {
-    const dataAtual = new Date();
-    if (!product.id) return;
+    if (!product) return;
     dispatch(
-      addCarrinho({
-        date: dataAtual.toISOString(),
-        id: 1,
-        products: [{ productId: product.id, quantity: 1 }],
-        userId: 2,
+      addProduct({
+        productId: product.id  ?? 0,
+        quantity: 1,
       }),
     );
   };

@@ -11,10 +11,3 @@ export interface Product {
   title?: string;
 }
 
-export interface state {
-  carrinho: Carrinho[];
-  _persist: {
-    rehydrated: boolean;
-    version: number;
-  };
-}

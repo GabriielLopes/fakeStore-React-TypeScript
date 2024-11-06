@@ -1,35 +1,36 @@
 import * as actionsTypes from './actionTypes';
 
-const initialState: CarrinhoState = {
-  carrinhos: [
+const initialState: Carrinho = {
+  date: '2024-06-11',
+  userId: 0,
+  id: 1,
+  products: [
     {
-      id: 15,
-      userId: 1,
-      date: '2024-11-06',
-      products: [
-        {
-          productId: 5,
-          quantity: 3,
-        },
-      ],
+      productId: 12,
+      quantity: 2,
     },
   ],
 };
 
-const reducer = (state: CarrinhoState = initialState, action: CarrinhoAction): CarrinhoState => {
+
+const reducer = (state: Carrinho = initialState, action: CarrinhoAction): Carrinho => {
   switch (action.type) {
     case actionsTypes.ADD_CARRINHO:
-      const newCarrinho: Carrinho = {
-        id: action.carrinho.id,
-        date: action.carrinho.date,
-        products: action.carrinho.products,
-        userId: action.carrinho.userId,
-      };
+      const newCarrinho = state;
+      if (newCarrinho) {
+        newCarrinho.products?.push({
+          productId: action.product.productId,
+          quantity: 1
+        });
+      }
+      const products = newCarrinho.products;
+      console.log(action)
       return {
         ...state,
-        carrinhos: state.carrinhos.concat(newCarrinho),
+        products,
       };
 
+    /*
     case actionsTypes.REMOVE_CARRINHO:
       const carrinhoAtualizado: Carrinho[] = state.carrinhos.filter(
         (carrinho) => carrinho.id !== action.carrinho.id,
@@ -37,7 +38,7 @@ const reducer = (state: CarrinhoState = initialState, action: CarrinhoAction): C
       return {
         ...state,
         carrinhos: carrinhoAtualizado,
-      };
+      };*/
   }
   return state;
 };
