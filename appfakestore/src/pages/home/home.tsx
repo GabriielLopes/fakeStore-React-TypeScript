@@ -53,7 +53,6 @@ export default function Home() {
     }
   };
 
-  console.log(produtos[0]);
   return (
     <div>
       <section id="vitrineProdutos" className="section vitrine-produtos">

@@ -16,26 +16,38 @@ export default function Header() {
 
   return (
     <aside className="menu">
-        <div className="main-content menu-content">
-            <a href="/">
-                <h1>LOGO</h1>
-            </a>
-            <nav>
-                <ul>
-                    {categorias.map((categoria) => (
-                      <li><a href={"/"+categoria}>{categoria}</a></li>
-                    ))}
-                </ul>
-            </nav>
+      <div className="main-content menu-content">
+        <a href="/">
+          <h1>LOGO</h1>
+        </a>
+        <nav>
+          <ul>
+            {categorias.map((categoria) => (
+              <li>
+                <a href={'/products/category/'+ categoria}>{categoria}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-            <nav>
-              <ul>
-                <li><a href="#about">About us</a></li>
-                <li><a><i className='bx bx-shopping-bag' /></a></li>
-                <li><a><i className='bx bx-user' /></a></li>
-              </ul>
-            </nav>
-        </div>
+        <nav>
+          <ul>
+            <li>
+              <a href="#about">About us</a>
+            </li>
+            <li>
+              <a>
+                <i className="bx bx-shopping-bag" />
+              </a>
+            </li>
+            <li>
+              <a>
+                <i className="bx bx-user" />
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </aside>
   );
 }
