@@ -15,8 +15,6 @@ export default function ProductsCategory() {
     getData();
   }, [category]);
 
-  console.log(produtos);
-
   return (
     <section className="section section-all-products">
       <div className="grid-produtos">

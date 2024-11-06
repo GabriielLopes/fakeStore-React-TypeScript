@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../services/axios';
 
+// CSS
 import '../../styles/home.css';
 import '../../styles/button.css';
 
 import { useInterval } from '../../hooks/use-interval';
 import { Product } from '../../interfaces/product';
+import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
+import { addCarrinho } from '../../store/modules/carrinho/actionCreators';
 
 export default function Home() {
+  const dispatch: Dispatch<any> = useDispatch();
+
   const [imagesProducts, setImagesProducts] = useState<string[]>([]);
   const [imagemAtual, setImagemAtual] = useState(imagesProducts[0]);
   const [indexImagem, setIndexImagem] = useState(0);
-
-  const [produtos, setProdutos] = useState<Product[]>([
-    {
-      description: 'teste',
-      image: '"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-    },
-  ]);
+  const [produtos, setProdutos] = useState<Product[]>([]);
 
   useEffect(() => {
     async function getData() {
@@ -51,6 +51,19 @@ export default function Home() {
     if (indexImagem >= 4) {
       setIndexImagem(0);
     }
+  };
+
+  const addItemCarrinho = (product: Product): void => {
+    const dataAtual = new Date();
+    if (!product.id) return;
+    dispatch(
+      addCarrinho({
+        date: dataAtual.toISOString(),
+        id: 1,
+        products: [{ productId: product.id, quantity: 1 }],
+        userId: 2,
+      }),
+    );
   };
 
   return (
@@ -112,7 +125,7 @@ export default function Home() {
 
               <strong>Price: {produto.price}</strong>
               <div className="controls">
-                <button className="btn add-carrinho-small">
+                <button className="btn add-carrinho-small" onClick={() => addItemCarrinho(produto)}>
                   <i className="bx bxs-cart-add" />
                 </button>
               </div>
