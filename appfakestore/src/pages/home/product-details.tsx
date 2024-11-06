@@ -1,80 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../services/axios';
-
-import '../../styles/home.css';
-import '../../styles/button.css';
-
-import { useInterval } from '../../hooks/use-interval';
 import { Product } from '../../interfaces/product';
+import axios from '../../services/axios';
+import { useParams } from 'react-router-dom';
 
-export default function Home() {
-  const [imagesProducts, setImagesProducts] = useState<string[]>([]);
-  const [imagemAtual, setImagemAtual] = useState(imagesProducts[0]);
-  const [indexImagem, setIndexImagem] = useState(0);
+import '../../styles/product-details.css';
 
-  const [produtos, setProdutos] = useState<Product[]>([
-    {
-      description: 'teste',
-      image: '"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-    },
-  ]);
+export default function ProductDetails() {
+  const [produto, setProduto] = useState<Product>({});
+  const [produtos, setProdutos] = useState<Product[]>([]);
+  const { id } = useParams();
 
   useEffect(() => {
     async function getData() {
-      const response = await axios.get('/products?limit=5');
-      const arrayImages = [];
-      for (let i = 0; i < 5; i++) {
-        arrayImages.push(response.data[i].image);
-      }
-      setImagesProducts(arrayImages);
-      setImagemAtual(arrayImages[0]);
+      const response = await axios.get(`/products/${id}`);
+      console.log(response.data);
+      setProduto(response.data);
     }
     getData();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     async function getData() {
-      const response = await axios.get('/products/?sort=desc');
+      const response = await axios.get('/products?limit=4');
       setProdutos(response.data);
     }
     getData();
   }, []);
 
-  useInterval(() => {
-    proximaImagem(imagesProducts, indexImagem);
-  }, 2000);
-
-  const proximaImagem = (imagesProducts: string[], indexImagem: number): void => {
-    setIndexImagem(indexImagem + 1);
-    setImagemAtual(imagesProducts[indexImagem]);
-
-    if (indexImagem >= 4) {
-      setIndexImagem(0);
-    }
-  };
-
-  console.log(produtos[0]);
   return (
     <div>
-      <section id="vitrineProdutos" className="section vitrine-produtos">
-        <img alt="images" src={imagemAtual} className={'img-vitrine'} />
-      </section>
-
       <section className="section section-white">
-        <div className="text-content">
-          <h3>THIS IS OUR LEADING SALES PRODUCT</h3>
+        <br />
+        <div className="text-content product-detail">
+            <h4>{produto.title}</h4>
           <div className="grid-img">
-            <img src={produtos[0].image} alt={produtos[0].description} className="img-destaque2" />
+            <img src={produto.image} alt={produto.description} className="img-destaque2" />
             <p>
-              {produtos[0].description}
+              <small>{produto.description}</small>
               <br />
               <i className="bx bxs-star" />
               <i className="bx bxs-star" />
               <i className="bx bxs-star" />
               <i className="bx bxs-star-half" />
-              {produtos[0].rating?.rate}
+              {produto.rating?.rate}
               <br />
-              <strong>Price: {produtos[0].price}</strong>
+              <strong>Price: {produto.price}</strong>
               <br />
               <br />
               <div className="controls">
@@ -91,7 +61,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section-all-products">
+      <h2>See other products</h2>
+      <section className="section section-all-products products-details">
         <div className="grid-produtos">
           {produtos.map((produto) => (
             <div className="grid-produtos-content">
