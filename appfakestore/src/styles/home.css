@@ -83,3 +83,7 @@
 .grid-produtos-content .titulo-produtos-grid {
   font-size: 18px;
 }
+
+.section.home.section-all-products {
+  height: 350vh;
+}

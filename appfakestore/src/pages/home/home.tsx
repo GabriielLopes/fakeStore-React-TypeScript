@@ -90,7 +90,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section-all-products">
+      <section className="section home section-all-products">
         <div className="grid-produtos">
           {produtos.map((produto) => (
             <div className="grid-produtos-content">

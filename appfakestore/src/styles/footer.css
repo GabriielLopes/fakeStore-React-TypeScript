@@ -1,0 +1,12 @@
+.footer {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  height: 100px;
+  font-size: small;
+}
+
+.footer .content.has-text-centered {
+  text-align: center;
+  margin: 50px auto;
+}
