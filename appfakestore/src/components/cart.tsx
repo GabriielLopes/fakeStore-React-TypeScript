@@ -7,7 +7,7 @@ import '../styles/cart.css';
 import { State } from '../interfaces/state';
 import axios from '../services/axios';
 import { Product } from '../interfaces/product';
-import { removeProduct } from '../store/modules/carrinho/actionCreators';
+import { aumentarQtdeCarrinho, removeProduct } from '../store/modules/carrinho/actionCreators';
 
 export function Cart() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -32,6 +32,11 @@ export function Cart() {
     dispatch(removeProduct(product));
   };
 
+  const aumentarQtdCarrinho = (product: ProductCart): void => {
+    if (!product) return;
+    dispatch(aumentarQtdeCarrinho(product));
+  };
+
   return (
     <div className="container-cart">
       {productsInCart.length <= 0 ? <h3>Seu carrinho está vazio!</h3> : ''}
@@ -51,8 +56,15 @@ export function Cart() {
                 <button>
                   <i className="bx bx-minus" />
                 </button>
-                <p>1</p>
-                <button>
+                <p></p>
+                <button
+                  onClick={() =>
+                    aumentarQtdCarrinho({
+                      productId: produto.id as number,
+                      quantity: 1,
+                    })
+                  }
+                >
                   <i className="bx bx-plus" />
                 </button>
                 <button

@@ -16,3 +16,11 @@ export function removeProduct(product: ProductCart) {
 
   return action;
 }
+
+export function aumentarQtdeCarrinho(product: ProductCart) {
+  const action: CarrinhoAction = {
+    type: actionsTypes.AUMENTAR_QTDE_CARRINHO,
+    product
+  }
+  return action;
+}
