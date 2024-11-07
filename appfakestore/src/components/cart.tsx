@@ -17,6 +17,14 @@ export function Cart() {
 
   const [productsInCart, setProductsInCart] = useState<Product[]>([]);
 
+  const consultarQtdeNoCarrinho = (id: number | undefined): number => {
+    if (!cart || !cart.products) {
+      return 0;
+    }
+    const produtoCorrespondente = cart.products.find((produto) => produto.productId === id);
+    return produtoCorrespondente?.quantity || 0;
+  };
+
   useEffect(() => {
     async function getData() {
       const response = await axios.get('/products');
@@ -56,7 +64,7 @@ export function Cart() {
                 <button>
                   <i className="bx bx-minus" />
                 </button>
-                <p></p>
+                <p>{produto ? consultarQtdeNoCarrinho(produto.id) : ''}</p>
                 <button
                   onClick={() =>
                     aumentarQtdCarrinho({
