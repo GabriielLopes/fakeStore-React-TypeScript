@@ -24,4 +24,13 @@ type CarrinhoAction = {
   product: ProductCart,
 };
 
+type Loading = {
+  isLoading: boolean;
+}
+
+interface LoadingAction {
+  type: string,
+  isLoading: Loading,
+}
+
 type DispatchType = (args: CarrinhoAction) => CarrinhoAction;
