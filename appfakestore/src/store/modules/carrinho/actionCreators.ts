@@ -3,8 +3,8 @@ import * as actionsTypes from './actionTypes';
 export function addProduct(product: ProductCart) {
   const action: CarrinhoAction = {
     type: actionsTypes.ADD_CARRINHO,
-    product
-  }
+    product,
+  };
   return action;
 }
 
@@ -20,7 +20,15 @@ export function removeProduct(product: ProductCart) {
 export function aumentarQtdeCarrinho(product: ProductCart) {
   const action: CarrinhoAction = {
     type: actionsTypes.AUMENTAR_QTDE_CARRINHO,
-    product
-  }
+    product,
+  };
+  return action;
+}
+
+export function diminuirQtdeCarrinho(product: ProductCart) {
+  const action: CarrinhoAction = {
+    type: actionsTypes.DIMINUIR_QTDE_CARRINHO,
+    product,
+  };
   return action;
 }

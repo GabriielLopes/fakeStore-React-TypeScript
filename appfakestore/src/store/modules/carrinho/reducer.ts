@@ -59,6 +59,22 @@ const reducer = (state: Carrinho = initialState, action: CarrinhoAction): Carrin
         products: newCarrinho.products,
       };
     }
+
+    case actionsTypes.DIMINUIR_QTDE_CARRINHO: {
+      const newCarrinho = state;
+      const productIndex = newCarrinho.products?.findIndex(
+        (product) => product.productId === action.product.productId,
+      );
+      if (newCarrinho.products && typeof productIndex === 'number') {
+        newCarrinho.products[productIndex].quantity =
+          (newCarrinho.products[productIndex].quantity as number) - 1;
+      }
+
+      return {
+        ...state,
+        products: newCarrinho.products,
+      };
+    }
   }
   return state;
 };
