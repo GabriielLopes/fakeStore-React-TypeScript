@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import '../styles/header.css';
 import axios from '../services/axios';
-import { Cart } from './cart';
 
 export default function Header() {
   const [categorias, setCategorias] = useState([]);
@@ -14,6 +13,14 @@ export default function Header() {
     }
     getData();
   }, []);
+
+  function handleVisibleCart() {
+    const divCartContent = document.querySelector('.container-cart');
+    if (divCartContent?.classList[1] === 'visible') {
+      return divCartContent.classList.remove('visible');
+    }
+    return divCartContent?.classList.add('visible');
+  }
 
   return (
     <aside className="menu">
@@ -37,7 +44,7 @@ export default function Header() {
               <a href="#about">About us</a>
             </li>
             <li>
-              <a>
+              <a onClick={handleVisibleCart} className='btn-icon-cart'>
                 <i className="bx bx-shopping-bag" />
               </a>
             </li>

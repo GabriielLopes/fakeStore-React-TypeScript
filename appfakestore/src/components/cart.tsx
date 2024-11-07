@@ -22,26 +22,42 @@ export function Cart() {
     getData();
   }, [idsProductsInCart]);
 
-  console.log(productsInCart);
-
   return (
-    <div className="container-cart">
+    <div className="container-cart visible">
       {productsInCart.map((produto) => (
         <>
           <div className="cart-content">
-            <img src={produto.image} alt={produto.description} />
+            <a href={'/product/' + produto.id}>
+              <img src={produto.image} alt={produto.description} />
+            </a>
             <small>
               {produto.title}
               <br />
               <br />
-              Sub total: <strong>{produto.price}</strong>
+              <strong>{produto.price}</strong>
               <br />
-              Qtde: <input type="number" />
+              <div className="buttons-controls-cart">
+                <button>
+                  <i className="bx bx-minus" />
+                </button>
+                <p>1</p>
+                <button>
+                  <i className="bx bx-plus" />
+                </button>
+              </div>
             </small>
           </div>
           <hr />
         </>
       ))}
+
+      <div className="subtotal-cart">
+        <div className="subtotal-cart-content">
+          <strong>R$ 1.500,00</strong>
+          <br />
+          <button className="btn finalizar-compra">Finalizar compra</button>
+        </div>
+      </div>
     </div>
   );
 }

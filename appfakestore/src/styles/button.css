@@ -40,3 +40,17 @@
 .btn.add-carrinho-small i {
   font-size: 20px;
 }
+.btn.finalizar-compra {
+  background-color: #fff;
+  width: 180px;
+  height: 35px;
+  font-size: 12px;
+  border-radius: 15px;
+  border: 1px solid black;
+  text-align: center;
+  padding: 10px;
+}
+
+.btn.finalizar-compra:hover {
+  background-color: #eeeeee;
+}
