@@ -8,6 +8,8 @@ import { State } from '../interfaces/state';
 import axios from '../services/axios';
 import { Product } from '../interfaces/product';
 import { aumentarQtdeCarrinho, removeProduct } from '../store/modules/carrinho/actionCreators';
+import { consultarQtdeNoCarrinho } from '../utils/consultarQtdeNoCarrinho';
+import { valorTotalNoCarrinho } from '../utils/valorTotalNoCarrinho';
 
 export function Cart() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -17,22 +19,6 @@ export function Cart() {
 
   const [productsInCart, setProductsInCart] = useState<Product[]>([]);
 
-  const consultarQtdeNoCarrinho = (id: number | undefined): number => {
-    if (!cart || !cart.products) {
-      return 0;
-    }
-    const produtoCorrespondente = cart.products.find((produto) => produto.productId === id);
-    return produtoCorrespondente?.quantity || 0;
-  };
-
-  const valorTotalNoCarrinho = (products: Product[]): number => {
-    return products.reduce((acc: number, value): number => {
-      if (value.price && value.id) {
-        return acc += value.price * consultarQtdeNoCarrinho(value.id);
-      }
-      return 0;
-    },0)
-}
 
   useEffect(() => {
     async function getData() {
@@ -73,7 +59,7 @@ export function Cart() {
                 <button>
                   <i className="bx bx-minus" />
                 </button>
-                <p>{produto ? consultarQtdeNoCarrinho(produto.id) : ''}</p>
+                <p>{produto ? consultarQtdeNoCarrinho(produto.id, cart) : ''}</p>
                 <button
                   onClick={() =>
                     aumentarQtdCarrinho({
@@ -104,7 +90,7 @@ export function Cart() {
 
       <div className="subtotal-cart">
         <div className="subtotal-cart-content">
-          <strong>R$ {valorTotalNoCarrinho(productsInCart).toFixed(2)}</strong>
+          <strong>R$ {valorTotalNoCarrinho(productsInCart, cart).toFixed(2)}</strong>
           <br />
           <button className="btn finalizar-compra">Finalizar compra</button>
         </div>
