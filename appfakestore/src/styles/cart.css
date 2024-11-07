@@ -61,15 +61,18 @@
 }
 
 .buttons-controls-cart p {
-  margin: 0 8px;
+  margin: 10px 8px;
 }
 
 .buttons-controls-cart button {
+  margin-top: 5px;
   cursor: pointer;
   border: none;
   border-radius: 100%;
+  width: 30px;
+  height: 30px;
   padding: 5px;
-  background-color: #ffff;
+  background-color: transparent;
   transition: background 300ms ease-in-out;
 }
 
@@ -84,4 +87,21 @@
 
 .container-cart h3 {
   margin: 150px 50px;
+}
+
+.container-cart .btn-delete {
+  background-color: transparent;
+  border: none;
+  width: 25px;
+  height: 25px;
+  font-size: 18px;
+  color: #EF5D50;
+  cursor: pointer;
+  margin-left: 60px;
+  transition: color 300ms ease-in-out;
+}
+
+.container-cart .btn-delete:hover {
+  background-color: transparent;
+  color: red;
 }

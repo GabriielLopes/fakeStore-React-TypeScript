@@ -34,9 +34,7 @@ export function Cart() {
 
   return (
     <div className="container-cart">
-      {productsInCart.length <= 0 ? (
-        <h3>Seu carrinho está vazio!</h3>
-      ): ''}
+      {productsInCart.length <= 0 ? <h3>Seu carrinho está vazio!</h3> : ''}
       {productsInCart.map((produto) => (
         <>
           <div className="cart-content">
@@ -57,18 +55,19 @@ export function Cart() {
                 <button>
                   <i className="bx bx-plus" />
                 </button>
+                <button
+                  onClick={() =>
+                    handleDelete({
+                      productId: produto.id as number,
+                      quantity: 1,
+                    })
+                  }
+                  className="btn-delete"
+                >
+                  <i className="bx bxs-trash" />
+                </button>
               </div>
             </small>
-            <button
-              onClick={() =>
-                handleDelete({
-                  productId: produto.id as number,
-                  quantity: 1,
-                })
-              }
-            >
-              Deletar
-            </button>
           </div>
           <hr />
         </>
