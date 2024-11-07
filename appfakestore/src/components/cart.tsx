@@ -25,6 +25,15 @@ export function Cart() {
     return produtoCorrespondente?.quantity || 0;
   };
 
+  const valorTotalNoCarrinho = (products: Product[]): number => {
+    return products.reduce((acc: number, value): number => {
+      if (value.price && value.id) {
+        return acc += value.price * consultarQtdeNoCarrinho(value.id);
+      }
+      return 0;
+    },0)
+}
+
   useEffect(() => {
     async function getData() {
       const response = await axios.get('/products');
@@ -95,7 +104,7 @@ export function Cart() {
 
       <div className="subtotal-cart">
         <div className="subtotal-cart-content">
-          <strong>R$ 1.500,00</strong>
+          <strong>R$ {valorTotalNoCarrinho(productsInCart).toFixed(2)}</strong>
           <br />
           <button className="btn finalizar-compra">Finalizar compra</button>
         </div>
