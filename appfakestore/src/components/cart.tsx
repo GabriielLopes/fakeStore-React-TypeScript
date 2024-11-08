@@ -14,24 +14,25 @@ import {
 } from '../store/modules/carrinho/actionCreators';
 import { consultarQtdeNoCarrinho } from '../utils/consultarQtdeNoCarrinho';
 import { valorTotalNoCarrinho } from '../utils/valorTotalNoCarrinho';
+import { Carrinho } from '../store/modules/type';
+import { ProductCart } from '../store/modules/type';
 
 export function Cart() {
   const dispatch: Dispatch<any> = useDispatch();
-
   const cart = useSelector<State>((state) => state.carrinho) as Carrinho;
   const idsProductsInCart = cart.products?.map((productsInCart) => productsInCart.productId);
-
   const [productsInCart, setProductsInCart] = useState<Product[]>([]);
+  const [productsList, setProductsList] = useState<Product[]>([]);
 
+  console.log(cart);
   useEffect(() => {
     async function getData() {
       const response = await axios.get('/products');
-      const productsList: Product[] = response.data;
-
+      setProductsList(response.data);
       setProductsInCart(productsList.filter((produto) => idsProductsInCart?.includes(produto.id)));
     }
     getData();
-  }, [idsProductsInCart]);
+  }, [idsProductsInCart, productsList]);
 
   const handleDelete = (product: ProductCart): void => {
     if (!product) return;

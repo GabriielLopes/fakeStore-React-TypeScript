@@ -105,3 +105,12 @@
   background-color: transparent;
   color: red;
 }
+
+.container-cart .container-loading {
+  position: fixed;
+  width: 300px;
+  height: 460px;
+  text-align: center;
+  align-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+}

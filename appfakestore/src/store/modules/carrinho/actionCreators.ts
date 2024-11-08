@@ -1,4 +1,6 @@
 import * as actionsTypes from './actionTypes';
+import { CarrinhoAction } from '../type';
+import { ProductCart } from '../type';
 
 export function addProduct(product: ProductCart) {
   const action: CarrinhoAction = {

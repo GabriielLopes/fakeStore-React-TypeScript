@@ -1,4 +1,6 @@
 import * as actionsTypes from './actionTypes';
+import { Carrinho } from '../type';
+import { CarrinhoAction } from '../type';
 
 const initialState: Carrinho = {
   date: '2024-06-11',
@@ -40,7 +42,6 @@ const reducer = (state: Carrinho = initialState, action: CarrinhoAction): Carrin
       }
       return {
         ...state,
-        products: newCarrinho.products,
       };
     }
 

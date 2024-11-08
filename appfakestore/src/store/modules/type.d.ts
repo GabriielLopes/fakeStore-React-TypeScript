@@ -1,3 +1,5 @@
+import { Product } from "../../interfaces/product";
+
 interface Carrinho {
   id: number;
   userId: number;
@@ -31,6 +33,17 @@ type Loading = {
 interface LoadingAction {
   type: string,
   isLoading: Loading,
+}
+
+interface FetchProductsState {
+  products: Product[],
+  loading: boolean,
+  error: string | null,
+}
+
+interface FetchProductsAction {
+  type: string,
+  payload?: string | Product[]
 }
 
 type DispatchType = (args: CarrinhoAction) => CarrinhoAction;
