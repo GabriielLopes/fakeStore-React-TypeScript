@@ -5,34 +5,41 @@ import { useDispatch } from 'react-redux';
 
 import '../styles/cart.css';
 import { State } from '../interfaces/state';
-import axios from '../services/axios';
 import { Product } from '../interfaces/product';
 import {
   aumentarQtdeCarrinho,
   diminuirQtdeCarrinho,
   removeProduct,
 } from '../store/modules/carrinho/actionCreators';
-import { consultarQtdeNoCarrinho } from '../utils/consultarQtdeNoCarrinho';
 import { valorTotalNoCarrinho } from '../utils/valorTotalNoCarrinho';
-import { Carrinho } from '../store/modules/type';
+import { Carrinho, FetchProductsState } from '../store/modules/type';
 import { ProductCart } from '../store/modules/type';
+import { fetchProductsRequest } from '../store/modules/produtos/actionCreatores';
+import { consultarQtdeNoCarrinho } from '../utils/consultarQtdeNoCarrinho';
 
 export function Cart() {
   const dispatch: Dispatch<any> = useDispatch();
   const cart = useSelector<State>((state) => state.carrinho) as Carrinho;
-  const idsProductsInCart = cart.products?.map((productsInCart) => productsInCart.productId);
-  const [productsInCart, setProductsInCart] = useState<Product[]>([]);
-  const [productsList, setProductsList] = useState<Product[]>([]);
+  const productsList = useSelector<State>((state) => state.produtos) as FetchProductsState;
 
-  console.log(cart);
+  const [productsInCart, setProductsInCart] = useState<Product[]>([]);
+
   useEffect(() => {
-    async function getData() {
-      const response = await axios.get('/products');
-      setProductsList(response.data);
-      setProductsInCart(productsList.filter((produto) => idsProductsInCart?.includes(produto.id)));
-    }
-    getData();
-  }, [idsProductsInCart, productsList]);
+    dispatch(fetchProductsRequest());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setProductsInCart(
+      productsList.products.filter((produto) => {
+        const quantityInCart = cart.products?.find(
+          (item) => item.productId === produto.id,
+        )?.quantity;
+        return quantityInCart && quantityInCart > 0;
+      }),
+    );
+  }, [cart, productsList]);
+
+  console.log(productsInCart)
 
   const handleDelete = (product: ProductCart): void => {
     if (!product) return;
@@ -49,7 +56,6 @@ export function Cart() {
     if (consultarQtdeNoCarrinho(product.productId, cart) === 1) return;
     dispatch(diminuirQtdeCarrinho(product));
   };
-
   return (
     <div className="container-cart">
       {productsInCart.length <= 0 ? <h3>Seu carrinho está vazio!</h3> : ''}

@@ -7,7 +7,7 @@ export default (reducers: any) => {
     {
       key: 'CONSUMO-API-FAKE-STORE',
       storage,
-      whitelist: ['carrinho', 'loading'],
+      whitelist: ['carrinho', 'loading', 'produtos'],
     },
     reducers
   );

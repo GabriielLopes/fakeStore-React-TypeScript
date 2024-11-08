@@ -2,16 +2,15 @@ import * as actionsTypes from './actionTypes';
 import { Carrinho } from '../type';
 import { CarrinhoAction } from '../type';
 
+const dataAtual = new Date();
 const initialState: Carrinho = {
-  date: '2024-06-11',
-  userId: 0,
+  date: dataAtual.toISOString(),
+  userId: 1,
   id: 1,
-  products: [
-    {
-      productId: 12,
-      quantity: 2,
-    },
-  ],
+  products: [{
+    productId: 0,
+    quantity: 0
+  }],
 };
 
 const reducer = (state: Carrinho = initialState, action: CarrinhoAction): Carrinho => {
@@ -25,7 +24,6 @@ const reducer = (state: Carrinho = initialState, action: CarrinhoAction): Carrin
         });
       }
       const products = newCarrinho.products;
-      console.log(action);
       return {
         ...state,
         products,

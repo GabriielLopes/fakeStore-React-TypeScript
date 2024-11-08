@@ -16,4 +16,4 @@ function* productSaga() {
   yield takeLatest(actionsTypes.FETCH_PRODUCTS_REQUEST, fetchProductsWorkerSaga);
 }
 
-export default productSaga;
+export default productSaga();
