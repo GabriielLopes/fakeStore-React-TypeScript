@@ -59,6 +59,7 @@
 
 .grid-produtos-content {
   display: flex;
+  position: relative;
   flex-direction: column;
   margin-left: 25px;
   margin-top: 15px;
@@ -98,4 +99,10 @@
 .controls {
   flex: 0 0 auto;
   margin-top: auto;
+}
+
+.grid-produtos .btn.add-carrinho-small {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
