@@ -10,10 +10,16 @@ import { Product } from '../../interfaces/product';
 import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../../store/modules/carrinho/actionCreators';
+import { useSelector } from 'react-redux';
+import { Carrinho } from '../../store/modules/type';
+import { State } from '../../interfaces/state';
+import produtoExisteNoCarrinho from '../../utils/produtoExisteNoCarrinho';
+import aumentarQtdeItemCarrinho from '../../utils/aumentarQtdeItemCarrinho';
+import Swal from 'sweetalert2';
 
 export default function Home() {
   const dispatch: Dispatch<any> = useDispatch();
-
+  const cart = useSelector<State>((state) => state.carrinho) as Carrinho;
   const [imagesProducts, setImagesProducts] = useState<string[]>([]);
   const [imagemAtual, setImagemAtual] = useState(imagesProducts[0]);
   const [indexImagem, setIndexImagem] = useState(0);
@@ -21,7 +27,7 @@ export default function Home() {
     {
       image: '',
       description: '',
-    }
+    },
   ]);
 
   useEffect(() => {
@@ -60,12 +66,32 @@ export default function Home() {
 
   const addItemCarrinho = (product: Product): void => {
     if (!product) return;
+    if (produtoExisteNoCarrinho(cart, product.id as number)) {
+      if (typeof product.id !== 'number') return;
+      aumentarQtdeItemCarrinho({ productId: product.id, quantity: 1 }, dispatch);
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        heightAuto: true,
+        title: 'Added another quantity to the cart.',
+        showConfirmButton: false,
+        timer: 800,
+      });
+      return;
+    }
     dispatch(
       addProduct({
-        productId: product.id  ?? 0,
+        productId: product.id ?? 0,
         quantity: 1,
       }),
     );
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Product added to cart',
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (

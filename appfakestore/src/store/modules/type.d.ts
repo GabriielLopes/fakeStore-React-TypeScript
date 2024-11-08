@@ -26,15 +26,6 @@ type CarrinhoAction = {
   product: ProductCart,
 };
 
-type Loading = {
-  isLoading: boolean;
-}
-
-interface LoadingAction {
-  type: string,
-  isLoading: Loading,
-}
-
 interface FetchProductsState {
   products: Product[],
   loading: boolean,

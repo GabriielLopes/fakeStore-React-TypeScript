@@ -1,5 +1,6 @@
 import { Product } from '../interfaces/product';
 import { consultarQtdeNoCarrinho } from './consultarQtdeNoCarrinho'
+import { Carrinho } from '../store/modules/type';
 
 
 export const valorTotalNoCarrinho = (products: Product[], cart: Carrinho): number => {

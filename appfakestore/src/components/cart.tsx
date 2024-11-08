@@ -7,7 +7,6 @@ import '../styles/cart.css';
 import { State } from '../interfaces/state';
 import { Product } from '../interfaces/product';
 import {
-  aumentarQtdeCarrinho,
   diminuirQtdeCarrinho,
   removeProduct,
 } from '../store/modules/carrinho/actionCreators';
@@ -16,6 +15,7 @@ import { Carrinho, FetchProductsState } from '../store/modules/type';
 import { ProductCart } from '../store/modules/type';
 import { fetchProductsRequest } from '../store/modules/produtos/actionCreatores';
 import { consultarQtdeNoCarrinho } from '../utils/consultarQtdeNoCarrinho';
+import aumentarQtdCarrinho from '../utils/aumentarQtdeItemCarrinho';
 
 export function Cart() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -25,8 +25,9 @@ export function Cart() {
   const [productsInCart, setProductsInCart] = useState<Product[]>([]);
 
   useEffect(() => {
+    if (productsList.products.length > 0) return;
     dispatch(fetchProductsRequest());
-  }, [dispatch]);
+  }, [dispatch, productsList.products.length]);
 
   useEffect(() => {
     setProductsInCart(
@@ -39,16 +40,9 @@ export function Cart() {
     );
   }, [cart, productsList]);
 
-  console.log(productsInCart)
-
   const handleDelete = (product: ProductCart): void => {
     if (!product) return;
     dispatch(removeProduct(product));
-  };
-
-  const aumentarQtdCarrinho = (product: ProductCart): void => {
-    if (!product) return;
-    dispatch(aumentarQtdeCarrinho(product));
   };
 
   const diminuirQtdCarrinho = (product: ProductCart): void => {
@@ -89,7 +83,7 @@ export function Cart() {
                     aumentarQtdCarrinho({
                       productId: produto.id as number,
                       quantity: 1,
-                    })
+                    },dispatch)
                   }
                 >
                   <i className="bx bx-plus" />

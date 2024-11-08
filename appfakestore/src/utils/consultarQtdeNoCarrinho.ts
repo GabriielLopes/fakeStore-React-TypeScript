@@ -1,3 +1,5 @@
+import { Carrinho } from "../store/modules/type";
+
 export const consultarQtdeNoCarrinho = (id: number | undefined, cart: Carrinho): number => {
   if (!cart || !cart.products) {
     return 0;
