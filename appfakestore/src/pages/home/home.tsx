@@ -100,37 +100,6 @@ export default function Home() {
         <img alt="images" src={imagemAtual} className={'img-vitrine'} />
       </section>
 
-      <section className="section section-white">
-        <div className="text-content">
-          <h3>THIS IS OUR LEADING SALES PRODUCT</h3>
-          <div className="grid-img">
-            <img src={produtos[0].image} alt={produtos[0].description} className="img-destaque2" />
-            <p>
-              {produtos[0].description}
-              <br />
-              <i className="bx bxs-star" />
-              <i className="bx bxs-star" />
-              <i className="bx bxs-star" />
-              <i className="bx bxs-star-half" />
-              {produtos[0].rating?.rate}
-              <br />
-              <strong>Price: {produtos[0].price}</strong>
-              <br />
-              <br />
-              <div className="controls">
-                <button className="btn comprar-agora">BUY NOW!</button>
-
-                <button className="btn add-carrinho">
-                  ADD CART
-                  <i className="bx bxs-cart-add" />
-                </button>
-              </div>
-            </p>
-          </div>
-          <br />
-        </div>
-      </section>
-
       <section className="section home section-all-products">
         <div className="grid-produtos">
           {produtos.map((produto) => (
@@ -154,7 +123,7 @@ export default function Home() {
               <strong>Price: {produto.price}</strong>
               <div className="controls">
                 <button className="btn add-carrinho-small" onClick={() => addItemCarrinho(produto)}>
-                  <i className="bx bxs-cart-add" />
+                  Add <i className="bx bxs-cart-add" />
                 </button>
               </div>
             </div>
