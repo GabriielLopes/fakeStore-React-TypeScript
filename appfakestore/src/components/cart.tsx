@@ -17,6 +17,7 @@ import { fetchProductsRequest } from '../store/modules/produtos/actionCreatores'
 import { consultarQtdeNoCarrinho } from '../utils/consultarQtdeNoCarrinho';
 import aumentarQtdCarrinho from '../utils/aumentarQtdeItemCarrinho';
 import { formatarValor } from '../utils/formatarValor';
+import { valorTotalItemCarrinho } from '../utils/valorTotalItemCarrinho';
 
 export function Cart() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -51,14 +52,6 @@ export function Cart() {
     if (consultarQtdeNoCarrinho(product.productId, cart) === 1) return;
     dispatch(diminuirQtdeCarrinho(product));
   };
-
-  const valorTotalItemCarrinho = (produto: Product, cart: Carrinho) => {
-    let result = 0;
-    if (typeof produto.id === 'number' && typeof produto.price === 'number') {
-      result = consultarQtdeNoCarrinho(produto.id, cart) * produto.price;
-    }
-    return result;
-  }
 
   return (
     <div className="container-cart">
