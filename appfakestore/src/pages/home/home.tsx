@@ -16,6 +16,7 @@ import { State } from '../../interfaces/state';
 import produtoExisteNoCarrinho from '../../utils/produtoExisteNoCarrinho';
 import aumentarQtdeItemCarrinho from '../../utils/aumentarQtdeItemCarrinho';
 import Swal from 'sweetalert2';
+import { formatarValor } from '../../utils/formatarValor';
 
 export default function Home() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -120,7 +121,7 @@ export default function Home() {
               </p>
               <br />
 
-              <strong>Price: {produto.price}</strong>
+              <strong>Price: {formatarValor.format(produto.price as number)}</strong>
               <div className="controls">
                 <button className="btn add-carrinho-small" onClick={() => addItemCarrinho(produto)}>
                   Add <i className="bx bxs-cart-add" />

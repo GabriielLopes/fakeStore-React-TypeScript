@@ -16,6 +16,7 @@ import { ProductCart } from '../store/modules/type';
 import { fetchProductsRequest } from '../store/modules/produtos/actionCreatores';
 import { consultarQtdeNoCarrinho } from '../utils/consultarQtdeNoCarrinho';
 import aumentarQtdCarrinho from '../utils/aumentarQtdeItemCarrinho';
+import { formatarValor } from '../utils/formatarValor';
 
 export function Cart() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -50,6 +51,15 @@ export function Cart() {
     if (consultarQtdeNoCarrinho(product.productId, cart) === 1) return;
     dispatch(diminuirQtdeCarrinho(product));
   };
+
+  const valorTotalItemCarrinho = (produto: Product, cart: Carrinho) => {
+    let result = 0;
+    if (typeof produto.id === 'number' && typeof produto.price === 'number') {
+      result = consultarQtdeNoCarrinho(produto.id, cart) * produto.price;
+    }
+    return result;
+  }
+
   return (
     <div className="container-cart">
       {productsInCart.length <= 0 ? <h3>Seu carrinho está vazio!</h3> : ''}
@@ -63,7 +73,7 @@ export function Cart() {
               {produto.title}
               <br />
               <br />
-              <strong>{produto.price}</strong>
+              <strong>{formatarValor.format(valorTotalItemCarrinho(produto, cart))}</strong>
               <br />
               <div className="buttons-controls-cart">
                 <button
@@ -108,7 +118,7 @@ export function Cart() {
 
       <div className="subtotal-cart">
         <div className="subtotal-cart-content">
-          <strong>R$ {valorTotalNoCarrinho(productsInCart, cart).toFixed(2)}</strong>
+          <strong>{formatarValor.format(valorTotalNoCarrinho(productsInCart, cart))}</strong>
           <br />
           <button className="btn finalizar-compra">Finalizar compra</button>
         </div>
