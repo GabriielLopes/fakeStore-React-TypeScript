@@ -49,11 +49,10 @@
 }
 
 .grid-produtos {
-  height: 55px;
   width: 100%;
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 2fr;
-  grid-template-rows: 550px;
+  grid-template-rows: 450px 450px 450px 450px;
   padding: 0 200px;
 }
 
@@ -63,10 +62,8 @@
   flex-direction: column;
   margin-left: 25px;
   margin-top: 15px;
-  margin-bottom: 25px;
   max-width: 250px;
-  height: auto;
-  max-height: 600px;
+  height: 400px;
   justify-content: center;
   justify-items: center;
   text-align: center;
