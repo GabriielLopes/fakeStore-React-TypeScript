@@ -13,6 +13,8 @@ import { Carrinho } from '../../store/modules/type';
 import aumentarQtdeItemCarrinho from '../../utils/aumentarQtdeItemCarrinho';
 import Swal from 'sweetalert2';
 import { addProduct } from '../../store/modules/carrinho/actionCreators';
+import AvaliacaoProduto from '../../components/AvaliacaoProduto';
+import { Rating } from '../../interfaces/ratingProducts';
 
 export default function ProductDetails() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -79,13 +81,9 @@ export default function ProductDetails() {
             <p>
               <small>{produto.description}</small>
               <br />
-              <i className="bx bxs-star" />
-              <i className="bx bxs-star" />
-              <i className="bx bxs-star" />
-              <i className="bx bxs-star-half" />
-              {produto.rating?.rate}
+              {produto.rating ? AvaliacaoProduto(produto.rating as Rating) : ""}
               <br />
-              <strong>Price: {produto.price}</strong>
+              <strong>Price: {formatarValor.format(produto.price as number)}</strong>
               <br />
               <br />
               <div className="controls">
@@ -114,12 +112,7 @@ export default function ProductDetails() {
               <p className="titulo-produtos-grid">{produto.title}</p>
               <br />
               <p>
-                <small>Rating:</small>
-                <i className="bx bxs-star" />
-                <i className="bx bxs-star" />
-                <i className="bx bxs-star" />
-                <i className="bx bxs-star" />
-                {produto.rating?.rate}
+              {produto.rating ? AvaliacaoProduto(produto.rating as Rating) : ""}
               </p>
               <br />
 

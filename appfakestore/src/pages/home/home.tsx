@@ -9,14 +9,13 @@ import { useInterval } from '../../hooks/use-interval';
 import { Product } from '../../interfaces/product';
 import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
-import { addProduct } from '../../store/modules/carrinho/actionCreators';
 import { useSelector } from 'react-redux';
 import { Carrinho } from '../../store/modules/type';
 import { State } from '../../interfaces/state';
-import produtoExisteNoCarrinho from '../../utils/produtoExisteNoCarrinho';
-import aumentarQtdeItemCarrinho from '../../utils/aumentarQtdeItemCarrinho';
-import Swal from 'sweetalert2';
 import { formatarValor } from '../../utils/formatarValor';
+import { addItemCarrinho } from '../../utils/addItemCarrinho';
+import AvaliacaoProduto from '../../components/AvaliacaoProduto';
+import { Rating } from '../../interfaces/ratingProducts';
 
 export default function Home() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -65,35 +64,6 @@ export default function Home() {
     }
   };
 
-  const addItemCarrinho = (product: Product): void => {
-    if (!product) return;
-    if (produtoExisteNoCarrinho(cart, product.id as number)) {
-      if (typeof product.id !== 'number') return;
-      aumentarQtdeItemCarrinho({ productId: product.id, quantity: 1 }, dispatch);
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        heightAuto: true,
-        title: 'Added another quantity to the cart.',
-        showConfirmButton: false,
-        timer: 800,
-      });
-      return;
-    }
-    dispatch(
-      addProduct({
-        productId: product.id ?? 0,
-        quantity: 1,
-      }),
-    );
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'Product added to cart',
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
 
   return (
     <div>
@@ -112,18 +82,13 @@ export default function Home() {
               <p className="titulo-produtos-grid">{produto.title}</p>
               <br />
               <p>
-                <small>Rating:</small>
-                <i className="bx bxs-star" />
-                <i className="bx bxs-star" />
-                <i className="bx bxs-star" />
-                <i className="bx bxs-star" />
-                {produto.rating?.rate}
+              {produto.rating ? AvaliacaoProduto(produto.rating as Rating) : ""}
               </p>
               <br />
 
               <strong>Price: {formatarValor.format(produto.price as number)}</strong>
               <div className="controls">
-                <button className="btn add-carrinho-small" onClick={() => addItemCarrinho(produto)}>
+                <button className="btn add-carrinho-small" onClick={() => addItemCarrinho(produto, dispatch, cart)}>
                   Add <i className="bx bxs-cart-add" />
                 </button>
               </div>

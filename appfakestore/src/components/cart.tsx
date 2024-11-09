@@ -18,6 +18,8 @@ import { consultarQtdeNoCarrinho } from '../utils/consultarQtdeNoCarrinho';
 import aumentarQtdCarrinho from '../utils/aumentarQtdeItemCarrinho';
 import { formatarValor } from '../utils/formatarValor';
 import { valorTotalItemCarrinho } from '../utils/valorTotalItemCarrinho';
+import AvaliacaoProduto from './AvaliacaoProduto';
+import { Rating } from '../interfaces/ratingProducts';
 
 export function Cart() {
   const dispatch: Dispatch<any> = useDispatch();
@@ -65,6 +67,7 @@ export function Cart() {
             <small>
               {produto.title}
               <br />
+              {produto.rating ? AvaliacaoProduto(produto.rating as Rating) : ""}
               <br />
               <strong>{formatarValor.format(valorTotalItemCarrinho(produto, cart))}</strong>
               <br />
