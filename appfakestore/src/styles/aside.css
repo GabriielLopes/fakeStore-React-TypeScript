@@ -1,0 +1,26 @@
+.aside-lateral {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  height: auto;
+  background-color: rgba(170, 170, 170, 1);
+  backdrop-filter: blur(20px);
+  border-radius: 8px;
+  margin-left: 15px;
+}
+
+.aside-lateral-content {
+  border-radius: 8px;
+  margin: 15px 15px 50px;
+  padding: 15px;
+  background-color: white;
+}
+
+.aside-lateral-content-itens {
+  color: black;
+}
+
+.aside-lateral-content input {
+  height: 25px;
+  margin-right: 15px;
+}

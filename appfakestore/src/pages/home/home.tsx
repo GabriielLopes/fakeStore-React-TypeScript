@@ -4,6 +4,7 @@ import axios from '../../services/axios';
 // CSS
 import '../../styles/home.css';
 import '../../styles/button.css';
+import '../../styles/aside.css';
 
 import { useInterval } from '../../hooks/use-interval';
 import { Product } from '../../interfaces/product';
@@ -64,7 +65,6 @@ export default function Home() {
     }
   };
 
-
   return (
     <div>
       <section id="vitrineProdutos" className="section vitrine-produtos">
@@ -72,6 +72,35 @@ export default function Home() {
       </section>
 
       <section className="section home section-all-products">
+        <aside className="aside-lateral">
+          <div className="aside-lateral-content categorias">
+            <h5>Categoryies</h5>
+            <div className="aside-lateral-content-itens">
+              <input type="checkbox" name="electronics" />
+              <label htmlFor='eletronics'>Electronics</label>
+              <br />
+              <input type="checkbox" name="jewelery" />
+              <label htmlFor='jewelery'>Jewelery</label>
+              <br />
+              <input type="checkbox" name="men's clothing" />
+              <label htmlFor='mens Clothing'>men's Clothing</label>
+              <br />
+              <input type="checkbox" name="womens clothing" />
+              <label htmlFor='womens clothing'>Women's Clothing</label>
+            </div>
+          </div>
+
+          <div className="aside-lateral-content preco">
+            <h5>Preço</h5>
+            <input type="range" min={0} max={5000} />
+          </div>
+
+          <div className="aside-lateral-content avaliacao">
+            <h5>Avaliacao</h5>
+            <input type="range" min={1} max={5} />
+          </div>
+        </aside>
+
         <div className="grid-produtos">
           {produtos.map((produto) => (
             <div className="grid-produtos-content">
@@ -81,14 +110,15 @@ export default function Home() {
               <br />
               <p className="titulo-produtos-grid">{produto.title}</p>
               <br />
-              <p>
-              {produto.rating ? AvaliacaoProduto(produto.rating as Rating) : ""}
-              </p>
+              <p>{produto.rating ? AvaliacaoProduto(produto.rating as Rating) : ''}</p>
               <br />
 
               <strong>Price: {formatarValor.format(produto.price as number)}</strong>
               <div className="controls">
-                <button className="btn add-carrinho-small" onClick={() => addItemCarrinho(produto, dispatch, cart)}>
+                <button
+                  className="btn add-carrinho-small"
+                  onClick={() => addItemCarrinho(produto, dispatch, cart)}
+                >
                   Add <i className="bx bxs-cart-add" />
                 </button>
               </div>
