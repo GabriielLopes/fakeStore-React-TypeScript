@@ -49,9 +49,6 @@ export default function Header() {
               </a>
             </li>
             <li>
-              <a>
-                <i className="bx bx-user" />
-              </a>
             </li>
           </ul>
         </nav>
