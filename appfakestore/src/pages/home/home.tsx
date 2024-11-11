@@ -24,11 +24,13 @@ export default function Home() {
   const [imagesProducts, setImagesProducts] = useState<string[]>([]);
   const [imagemAtual, setImagemAtual] = useState(imagesProducts[0]);
   const [indexImagem, setIndexImagem] = useState(0);
-  const produtos = useSelector<State>((state) => state.produtos.products) as Product[];
-  const [produtosFiltrados, setProdutosFiltrados] = useState<Product[]>(produtos);
+  const products = useSelector<State>((state) => state.produtos.products) as Product[];
+  const [produtosFiltrados, setProdutosFiltrados] = useState<Product[]>(
+    useSelector<State>((state) => state.produtos.products) as Product[],
+  );
   const [categorias, setCategorias] = useState<string>('');
 
-  const [price, setPrice] = useState(0);
+  const [prices, setPrices] = useState(0);
   const [rating, setRating] = useState(0);
 
   useEffect(() => {
@@ -45,9 +47,22 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    aplicarFiltroPorCategoria(produtos, categorias);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categorias, produtos]);
+    const produtosFiltrados = products.filter((produto) => {
+      // Filtro por categoria
+      if (categorias !== '' && produto.category !== categorias.toLowerCase()) {
+        return false;
+      }
+      if (prices !== 0 && (produto.price as number) > prices) {
+        return false;
+      }
+      if (rating !== 0 && (produto.rating?.rate as number) > rating) {
+        return false;
+      }
+      return true;
+    });
+
+    setProdutosFiltrados(produtosFiltrados);
+  }, [categorias, products, prices, rating]);
 
   useInterval(() => {
     proximaImagem(imagesProducts, indexImagem);
@@ -61,22 +76,6 @@ export default function Home() {
       setIndexImagem(0);
     }
   };
-
-  const aplicarFiltroPorCategoria = (produtos: Product[], categoria: string) => {
-    const categoriaFormatada = categoria.toLowerCase();
-    setProdutosFiltrados(produtos);
-    if (categorias === '') return;
-    if (categoria === '') {
-      setProdutosFiltrados(produtos);
-    }
-    const produtosFiltrados = produtos.filter((produto) => {
-      if (!produto.category) return [];
-      return produto.category === categoriaFormatada;
-    });
-    setProdutosFiltrados(produtosFiltrados);
-  };
-
-  console.log(produtosFiltrados);
 
   return (
     <div>
@@ -127,7 +126,14 @@ export default function Home() {
               />
               <label htmlFor="womens clothing">Women's Clothing</label>
             </div>
-            <button onClick={() => setCategorias('')}>Clear filters</button>
+            <button
+              className="btn-clear-filter"
+              onClick={() => setCategorias('')}
+              hidden={categorias.length <= 0}
+            >
+              <i className="bx bx-x" />
+              Clear Filters
+            </button>
           </div>
 
           <div className="aside-lateral-content preco">
@@ -140,11 +146,15 @@ export default function Home() {
             <input
               type="range"
               min={0}
-              value={price}
+              value={prices}
               max={1000}
-              onChange={(e) => setPrice(parseFloat(e.target.value))}
+              onChange={(e) => setPrices(parseFloat(e.target.value))}
             />
-            <small className="price-value">{formatarValor.format(price)}</small>
+            <small className="price-value">{formatarValor.format(prices)}</small>
+            <br />
+            <button className="btn-clear-filter" onClick={() => setPrices(0)} hidden={prices <= 0}>
+              <i className="bx bx-x" /> Clear Filters
+            </button>
           </div>
 
           <div className="aside-lateral-content avaliacao">
@@ -165,6 +175,10 @@ export default function Home() {
               max={5}
               onChange={(e) => setRating(parseFloat(e.target.value))}
             />
+            <button className="btn-clear-filter" onClick={() => setRating(0)} hidden={rating <= 0}>
+              <i className="bx bx-x" />
+              Clear Filters
+            </button>
           </div>
         </aside>
 
