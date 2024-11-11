@@ -52,7 +52,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 2fr;
-  grid-template-rows: 450px 450px 450px 450px;
+  grid-template-rows: 550px 550px 550px 550px;
   padding: 0 10px;
 }
 
@@ -63,7 +63,7 @@
   margin-left: 25px;
   margin-top: 15px;
   max-width: 250px;
-  height: 400px;
+  height: 500px;
   justify-content: center;
   justify-items: center;
   text-align: center;

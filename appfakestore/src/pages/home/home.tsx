@@ -24,12 +24,12 @@ export default function Home() {
   const [imagesProducts, setImagesProducts] = useState<string[]>([]);
   const [imagemAtual, setImagemAtual] = useState(imagesProducts[0]);
   const [indexImagem, setIndexImagem] = useState(0);
-  const [produtos, setProdutos] = useState<Product[]>([
-    {
-      image: '',
-      description: '',
-    },
-  ]);
+  const produtos = useSelector<State>((state) => state.produtos.products) as Product[];
+  const [produtosFiltrados, setProdutosFiltrados] = useState<Product[]>(produtos);
+  const [categorias, setCategorias] = useState<string>('');
+
+  const [price, setPrice] = useState(0);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     async function getData() {
@@ -45,12 +45,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    async function getData() {
-      const response = await axios.get('/products/?sort=desc');
-      setProdutos(response.data);
-    }
-    getData();
-  }, []);
+    aplicarFiltroPorCategoria(produtos, categorias);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categorias, produtos]);
 
   useInterval(() => {
     proximaImagem(imagesProducts, indexImagem);
@@ -65,6 +62,22 @@ export default function Home() {
     }
   };
 
+  const aplicarFiltroPorCategoria = (produtos: Product[], categoria: string) => {
+    const categoriaFormatada = categoria.toLowerCase();
+    setProdutosFiltrados(produtos);
+    if (categorias === '') return;
+    if (categoria === '') {
+      setProdutosFiltrados(produtos);
+    }
+    const produtosFiltrados = produtos.filter((produto) => {
+      if (!produto.category) return [];
+      return produto.category === categoriaFormatada;
+    });
+    setProdutosFiltrados(produtosFiltrados);
+  };
+
+  console.log(produtosFiltrados);
+
   return (
     <div>
       <section id="vitrineProdutos" className="section vitrine-produtos">
@@ -76,33 +89,87 @@ export default function Home() {
           <div className="aside-lateral-content categorias">
             <h5>Categoryies</h5>
             <div className="aside-lateral-content-itens">
-              <input type="checkbox" name="electronics" />
-              <label htmlFor='eletronics'>Electronics</label>
+              <input
+                type="checkbox"
+                name="electronics"
+                value="Electronics"
+                onChange={(e) => setCategorias(e.target.value)}
+                checked={categorias === 'Electronics'}
+              />
+              <label htmlFor="eletronics">Electronics</label>
               <br />
-              <input type="checkbox" name="jewelery" />
-              <label htmlFor='jewelery'>Jewelery</label>
+              <input
+                type="checkbox"
+                name="jewelery"
+                value={'Jewelery'}
+                onChange={(e) => setCategorias(e.target.value)}
+                checked={categorias === 'Jewelery'}
+              />
+              <label htmlFor="jewelery">Jewelery</label>
               <br />
-              <input type="checkbox" name="men's clothing" />
-              <label htmlFor='mens Clothing'>men's Clothing</label>
+              <input
+                type="checkbox"
+                name="men's clothing"
+                value={`Men's Clothing`}
+                onChange={(e) => {
+                  setCategorias(e.target.value);
+                }}
+                checked={categorias === `Men's Clothing`}
+              />
+              <label htmlFor="mens Clothing">Men's Clothing</label>
               <br />
-              <input type="checkbox" name="womens clothing" />
-              <label htmlFor='womens clothing'>Women's Clothing</label>
+              <input
+                type="checkbox"
+                name="womens clothing"
+                value={`Women's Clothing`}
+                onChange={(e) => setCategorias(e.target.value)}
+                checked={categorias === `Women's Clothing`}
+              />
+              <label htmlFor="womens clothing">Women's Clothing</label>
             </div>
+            <button onClick={() => setCategorias('')}>Clear filters</button>
           </div>
 
           <div className="aside-lateral-content preco">
-            <h5>Preço</h5>
-            <input type="range" min={0} max={5000} />
+            <h5>Price</h5>
+            <div className="display-filter-controls">
+              <small className="price-min-value">{formatarValor.format(0)}</small>
+
+              <small className="price-max-value">{formatarValor.format(1000)}</small>
+            </div>
+            <input
+              type="range"
+              min={0}
+              value={price}
+              max={1000}
+              onChange={(e) => setPrice(parseFloat(e.target.value))}
+            />
+            <small className="price-value">{formatarValor.format(price)}</small>
           </div>
 
           <div className="aside-lateral-content avaliacao">
-            <h5>Avaliacao</h5>
-            <input type="range" min={1} max={5} />
+            <h5>Rating</h5>
+            <div className="display-filter-controls">
+              <small className="rating-min-value">
+                0 <i className="bx bxs-star"></i>
+              </small>
+              <small className="rating-value">{rating}</small>
+              <small className="rating-max-value">
+                5 <i className="bx bxs-star"></i>
+              </small>
+            </div>
+            <input
+              type="range"
+              min={0}
+              value={rating}
+              max={5}
+              onChange={(e) => setRating(parseFloat(e.target.value))}
+            />
           </div>
         </aside>
 
         <div className="grid-produtos">
-          {produtos.map((produto) => (
+          {produtosFiltrados.map((produto) => (
             <div className="grid-produtos-content">
               <a href={'/product/' + produto.id}>
                 <img src={produto.image} alt={produto.description} />
